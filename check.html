@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>상태 선택</title>
+
+<style>
+
+body{
+    font-family:Arial;
+    padding:40px;
+    background:#f5f7fb;
+}
+
+h2{
+    margin-bottom:30px;
+}
+
+label{
+    display:block;
+    font-size:22px;
+    margin:18px 0;
+    cursor:pointer;
+
+    padding:10px 15px;
+    border-radius:10px;
+    width:fit-content;
+}
+
+.before{
+    background:#ff9e9e;   /* 빨간색 */
+}
+
+.editing{
+    background:#ffe867;   /* 노란색 */
+}
+
+.photo{
+    background:#b8f28d;   /* 연두색 */
+}
+
+.done{
+    background:#87bfff;   /* 파란색 */
+}
+
+button{
+    margin-top:30px;
+    padding:12px 30px;
+    font-size:20px;
+}
+
+</style>
+
+</head>
+<body>
+
+<h2 id="title"></h2>
+
+<label class="before">
+    <input type="radio" name="state" value="before">
+    수정전 🚨
+</label>
+
+<label class="editing">
+    <input type="radio" name="state" value="editing">
+    수정중 ✍️
+</label>
+
+<label class="photo">
+    <input type="radio" name="state" value="photo">
+    사진 추가 완료 🖼️
+</label>
+
+<label class="done">
+    <input type="radio" name="state" value="done">
+    완료 💙
+</label>
+
+
+<script>
+
+const params=new URLSearchParams(location.search);
+
+const date=params.get("date");
+
+document.getElementById("title").innerText=date;
+
+const key="check_"+date;
+
+const saved=localStorage.getItem(key);
+
+if(saved){
+
+    document.querySelector(`input[value="${saved}"]`).checked=true;
+
+}
+
+document.querySelectorAll('input[name="state"]').forEach(radio => {
+
+    radio.addEventListener("change", () => {
+
+        localStorage.setItem(key, radio.value);
+
+    });
+
+});
+
+</script>
+
+</body>
+</html>
